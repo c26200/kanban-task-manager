@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #09090b; /* Color 'main' */
+  color: #e4e4e7; /* Texto claro (Zinc 200) */
+  font-family: 'Inter', sans-serif;
+  overflow: hidden; /* Evitamos scroll general, solo en las columnas */
+}
