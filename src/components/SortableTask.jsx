@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TaskCard from "./TaskCard";
 
-const SortableTask = ({ task, deleteTask }) => {
+const SortableTask = ({ task, deleteTask, updateTask }) => {
   const {
     attributes,
     listeners,
@@ -29,8 +29,11 @@ const SortableTask = ({ task, deleteTask }) => {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {/* Pasamos la función deleteTask aquí */}
-      <TaskCard task={task} deleteTask={deleteTask} />
+      <TaskCard 
+        task={task} 
+        deleteTask={deleteTask} 
+        updateTask={updateTask}
+      />
     </div>
   );
 };

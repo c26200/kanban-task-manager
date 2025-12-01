@@ -12,7 +12,7 @@ import { arrayMove } from "@dnd-kit/sortable";
 
 import { COLUMNS, INITIAL_TASKS } from "./data/board";
 import TaskCard from "./components/TaskCard";
-import Column from "./components/Column"; // Importamos el nuevo componente
+import Column from "./components/Column";
 
 function App() {
   const [tasks, setTasks] = useState(() => {
@@ -30,6 +30,8 @@ function App() {
     localStorage.setItem("kanban-tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  // --- CRUD FUNCTIONS ---
+
   const createTask = (columnId) => {
     const newTask = {
       id: uuidv4(),
@@ -44,7 +46,15 @@ function App() {
     setTasks(newTasks);
   };
 
-  // --- LÓGICA DE DRAG & DROP ---
+  // NUEVA FUNCIÓN: Actualizar el texto de la tarea
+  const updateTask = (id, content) => {
+    const newTasks = tasks.map((task) =>
+      task.id === id ? { ...task, content } : task
+    );
+    setTasks(newTasks);
+  };
+
+  // --- DRAG & DROP LOGIC ---
 
   const handleDragStart = (event) => {
     setActiveTask(event.active.data.current?.task);
@@ -64,7 +74,7 @@ function App() {
 
     if (!isActiveTask) return;
 
-    // 1. Soltar sobre otra TAREA
+    // 1. Sobre otra tarea
     if (isActiveTask && isOverTask) {
       setTasks((tasks) => {
         const activeIndex = tasks.findIndex((t) => t.id === activeId);
@@ -77,12 +87,11 @@ function App() {
       });
     }
 
-    // 2. Soltar sobre una COLUMNA VACÍA
+    // 2. Sobre una columna vacía
     const isOverColumn = COLUMNS.some((col) => col.id === overId);
     if (isActiveTask && isOverColumn) {
       setTasks((tasks) => {
         const activeIndex = tasks.findIndex((t) => t.id === activeId);
-        // Aquí cambiamos la columna de la tarea
         tasks[activeIndex].columnId = overId;
         return arrayMove(tasks, activeIndex, activeIndex);
       });
@@ -116,13 +125,13 @@ function App() {
       >
         <div className="flex gap-8 h-full justify-center w-full max-w-7xl">
           {COLUMNS.map((col) => (
-            // Usamos el nuevo componente Column
             <Column
               key={col.id}
               col={col}
               tasks={tasks.filter((t) => t.columnId === col.id)}
               createTask={createTask}
               deleteTask={deleteTask}
+              updateTask={updateTask} 
             />
           ))}
         </div>
