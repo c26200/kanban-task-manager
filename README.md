@@ -1,25 +1,44 @@
-# 📋 Kanban Flow - Task Manager
+# Kanban Flow
 
-A high-performance Kanban board application built with React, featuring seamless drag-and-drop functionality and local persistence. Designed to mimic professional tools like Linear or Trello.
+A three-column kanban board with drag and drop, built with React and dnd-kit. The board
+persists in `localStorage`, so a reload keeps your tasks without needing a backend.
 
-![Project Preview](./preview.png)
+**[Live demo](https://kanban-task-manager-eight.vercel.app)**
 
-## 🚀 Live Demo
-[View Live Project](https://kanban-task-manager-eight.vercel.app/)
+![Board preview](./preview.png)
 
-## ✨ Key Features
-* **👆 Drag & Drop API:** Powered by `@dnd-kit` for buttery smooth interactions (sortable lists & columns).
-* **💾 Local Persistence:** Tasks are saved in the browser's LocalStorage, so you never lose data on refresh.
-* **⚡ Reactive State:** Instant UI updates when moving, creating, or deleting tasks.
-* **🎨 Modern UI:** Clean, dark-themed interface built with Tailwind CSS.
-* **📱 Smart Columns:** Auto-detection of empty columns for drop zones.
+## What it does
 
-## 🛠️ Tech Stack
-* React + Vite
-* Tailwind CSS
-* @dnd-kit (Core & Sortable)
-* Lucide React (Icons)
-* UUID (Unique ID generation)
+- Drag tasks between Backlog, In Progress and Done — including into empty columns
+- Create, rename and delete tasks directly on the board
+- State is written to `localStorage` under the `kanban-tasks` key on every change
+- "Reset board" restores the seed data from `src/data/board.js`
 
----
-Made with ❤️ by [Carlos Gordillo](https://github.com/c26200)
+## Stack
+
+React 19 · Vite · Tailwind CSS · @dnd-kit · uuid
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+## Structure
+
+```
+src/
+├── components/
+│   ├── Column.jsx             # Column shell and drop target
+│   ├── SortableTask.jsx       # Sortable wrapper around each task
+│   └── TaskCard.jsx
+├── data/board.js              # Columns and seed tasks
+└── App.jsx                    # Drag context, CRUD and persistence
+```
+
+## Notes
+
+There is no backend. Clearing the browser's site data resets the board to the seed tasks.
+Task order within a column is part of the same array as the tasks themselves, so moving a
+task also reorders it in the persisted list.
