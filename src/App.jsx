@@ -19,7 +19,7 @@ function App() {
     const savedTasks = localStorage.getItem("kanban-tasks");
     return savedTasks ? JSON.parse(savedTasks) : INITIAL_TASKS;
   });
-  
+
   const [activeTask, setActiveTask] = useState(null);
 
   const sensors = useSensors(
@@ -30,31 +30,26 @@ function App() {
     localStorage.setItem("kanban-tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  // --- CRUD FUNCTIONS ---
+  // --- CRUD ---
 
   const createTask = (columnId) => {
     const newTask = {
       id: uuidv4(),
       columnId,
-      content: `Nueva tarea ${tasks.length + 1}`,
+      content: `New task ${tasks.length + 1}`,
     };
     setTasks([...tasks, newTask]);
   };
 
   const deleteTask = (taskId) => {
-    const newTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(newTasks);
+    setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
-  // NUEVA FUNCIÓN: Actualizar el texto de la tarea
   const updateTask = (id, content) => {
-    const newTasks = tasks.map((task) =>
-      task.id === id ? { ...task, content } : task
-    );
-    setTasks(newTasks);
+    setTasks(tasks.map((task) => (task.id === id ? { ...task, content } : task)));
   };
 
-  // --- DRAG & DROP LOGIC ---
+  // --- DRAG & DROP ---
 
   const handleDragStart = (event) => {
     setActiveTask(event.active.data.current?.task);
@@ -74,7 +69,7 @@ function App() {
 
     if (!isActiveTask) return;
 
-    // 1. Sobre otra tarea
+    // 1. Over another task
     if (isActiveTask && isOverTask) {
       setTasks((tasks) => {
         const activeIndex = tasks.findIndex((t) => t.id === activeId);
@@ -87,7 +82,7 @@ function App() {
       });
     }
 
-    // 2. Sobre una columna vacía
+    // 2. Over an empty column
     const isOverColumn = COLUMNS.some((col) => col.id === overId);
     if (isActiveTask && isOverColumn) {
       setTasks((tasks) => {
@@ -102,19 +97,31 @@ function App() {
     setActiveTask(null);
   };
 
+  const pad = (n) => String(n).padStart(2, "0");
+
   return (
-    <div className="h-screen w-full flex flex-col p-10 bg-main text-white items-center">
-      <div className="w-full max-w-7xl mb-10 flex items-center justify-between">
-        <h1 className="text-4xl font-bold tracking-tight">Kanban Flow</h1>
-        <button 
-          onClick={() => {
-             if(confirm("¿Resetear tablero?")) setTasks(INITIAL_TASKS)
-          }}
-          className="text-xs text-gray-500 hover:text-white transition-colors"
-        >
-          Reset Board
-        </button>
-      </div>
+    <div className="app">
+      <header className="titleblock">
+        <div className="tb-left">
+          <div className="k">DRAWING No. 04 — BOARD LAYOUT</div>
+          <h1>KANBAN FLOW</h1>
+        </div>
+
+        <div className="tb-right">
+          <div className="tb-cell"><span className="k">TASKS</span><span className="v">{pad(tasks.length)}</span></div>
+          <div className="tb-cell"><span className="k">SHEET</span><span className="v">01 / 01</span></div>
+          <div className="tb-cell"><span className="k">SCALE</span><span className="v">1:1</span></div>
+          <div className="tb-cell"><span className="k">STATES</span><span className="v">03</span></div>
+          <button
+            className="reset"
+            onClick={() => {
+              if (window.confirm("Reset the board?")) setTasks(INITIAL_TASKS);
+            }}
+          >
+            RESET
+          </button>
+        </div>
+      </header>
 
       <DndContext
         sensors={sensors}
@@ -123,7 +130,7 @@ function App() {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <div className="flex gap-8 h-full justify-center w-full max-w-7xl">
+        <div className="board">
           {COLUMNS.map((col) => (
             <Column
               key={col.id}
@@ -131,7 +138,7 @@ function App() {
               tasks={tasks.filter((t) => t.columnId === col.id)}
               createTask={createTask}
               deleteTask={deleteTask}
-              updateTask={updateTask} 
+              updateTask={updateTask}
             />
           ))}
         </div>
@@ -140,6 +147,15 @@ function App() {
           {activeTask ? <TaskCard task={activeTask} /> : null}
         </DragOverlay>
       </DndContext>
+
+      <footer className="legend">
+        <div className="items">
+          <span>— — ZONE LIMIT</span>
+          <span>▭ TASK CARD</span>
+          <span>DRAG TO MOVE</span>
+        </div>
+        <span>05 TASKS · LOCALSTORAGE</span>
+      </footer>
     </div>
   );
 }

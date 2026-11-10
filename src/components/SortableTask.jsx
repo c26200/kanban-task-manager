@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TaskCard from "./TaskCard";
 
-const SortableTask = ({ task, deleteTask, updateTask }) => {
+const SortableTask = ({ task, deleteTask, updateTask, status }) => {
   const {
     attributes,
     listeners,
@@ -18,21 +18,16 @@ const SortableTask = ({ task, deleteTask, updateTask }) => {
   };
 
   if (isDragging) {
-    return (
-      <div
-        ref={setNodeRef}
-        style={style}
-        className="bg-white/5 p-3 rounded-lg border border-dashed border-white/20 min-h-[50px] opacity-50"
-      />
-    );
+    return <div ref={setNodeRef} style={style} className="drag-placeholder" />;
   }
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <TaskCard 
-        task={task} 
-        deleteTask={deleteTask} 
+      <TaskCard
+        task={task}
+        deleteTask={deleteTask}
         updateTask={updateTask}
+        status={status}
       />
     </div>
   );

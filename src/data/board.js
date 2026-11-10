@@ -1,30 +1,28 @@
-import { v4 as uuidv4 } from 'uuid'; // Si no tienes uuid, usaremos strings simples por ahora
-
 export const INITIAL_TASKS = [
   {
     id: '1',
     columnId: 'todo',
-    content: 'Analizar competidores',
+    content: 'Analyze competitors',
   },
   {
     id: '2',
     columnId: 'todo',
-    content: 'Diseñar wireframes de alta fidelidad',
+    content: 'Design high-fidelity wireframes',
   },
   {
     id: '3',
     columnId: 'in-progress',
-    content: 'Configurar base de datos (Supabase)',
+    content: 'Set up the database (Supabase)',
   },
   {
     id: '4',
     columnId: 'in-progress',
-    content: 'Implementar autenticación',
+    content: 'Implement authentication',
   },
   {
     id: '5',
     columnId: 'done',
-    content: 'Crear repositorio en GitHub',
+    content: 'Create the GitHub repository',
   },
 ];
 

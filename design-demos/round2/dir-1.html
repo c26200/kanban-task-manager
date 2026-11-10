@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kanban Flow — Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background-color: #0B3D6E;
+    background-image:
+      linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: #E8F1FF;
+    font-family: "Archivo", sans-serif;
+    height: 100vh; overflow: hidden;
+  }
+  .page { height: 100%; display: flex; flex-direction: column; padding: 20px 26px 16px; }
+  .mono { font-family: "IBM Plex Mono", monospace; }
+
+  .titleblock {
+    border: 2px solid #9BD1FF; background: rgba(8,45,82,.9);
+    display: flex; justify-content: space-between; align-items: stretch; flex: none;
+  }
+  .tb-left { padding: 10px 16px; }
+  .tb-left .k { font-family: "IBM Plex Mono", monospace; font-size: 14px; letter-spacing: .14em; color: #9BD1FF; }
+  .tb-left h1 { font-size: 26px; font-weight: 700; letter-spacing: -.01em; margin-top: 3px; }
+  .tb-right { display: grid; grid-template-columns: repeat(4, auto); border-left: 2px solid #9BD1FF; }
+  .tb-cell { padding: 7px 14px; border-left: 1px solid rgba(155,209,255,.5); display: flex; flex-direction: column; justify-content: center; }
+  .tb-cell:first-child { border-left: none; }
+  .tb-cell .k { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .1em; color: #9BD1FF; }
+  .tb-cell .v { font-family: "IBM Plex Mono", monospace; font-size: 13px; margin-top: 2px; }
+
+  .zones { flex: 1; display: flex; flex-direction: column; gap: 12px; margin-top: 12px; min-height: 0; }
+  .zone { flex: 1; border: 1px dashed #9BD1FF; background: rgba(8,45,82,.55); display: grid; grid-template-columns: 240px 1fr; min-height: 0; }
+  .zone-left { border-right: 1px solid rgba(155,209,255,.5); padding: 12px 14px; display: flex; flex-direction: column; justify-content: center; }
+  .zl { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .12em; color: #9BD1FF; }
+  .zt { font-size: 22px; font-weight: 600; margin-top: 3px; }
+  .zc { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: #B8D6F5; margin-top: 4px; }
+  .zdim { margin-top: auto; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: #7FAEDC; border-top: 1px solid rgba(155,209,255,.4); padding-top: 6px; }
+
+  .cards { padding: 12px; display: flex; gap: 10px; align-items: stretch; min-width: 0; overflow-x: auto; }
+  .card {
+    background: #F8F8F2; border: 1px solid #9BD1FF; color: #14356B;
+    padding: 10px 12px; flex: 0 0 240px; display: flex; flex-direction: column; justify-content: center;
+  }
+  .card .code { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: #4E6885; letter-spacing: .06em; }
+  .card .txt { font-size: 15px; line-height: 1.35; margin-top: 4px; }
+  .add {
+    flex: 0 0 130px; border: 1px dashed #9BD1FF; background: none; color: #E8F1FF;
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .06em;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .add:hover { background: rgba(155,209,255,.12); }
+
+  .legend { flex: none; display: flex; justify-content: space-between; margin-top: 12px; border-top: 1px solid rgba(155,209,255,.4); padding-top: 7px; font-family: "IBM Plex Mono", monospace; font-size: 14px; letter-spacing: .06em; color: #B8D6F5; }
+  .legend .items { display: flex; gap: 22px; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="titleblock">
+      <div class="tb-left">
+        <div class="k">DRAWING No. 04 — SECTION VIEW</div>
+        <h1>KANBAN FLOW</h1>
+      </div>
+      <div class="tb-right">
+        <div class="tb-cell"><span class="k">PROJECT</span><span class="v">KANBAN</span></div>
+        <div class="tb-cell"><span class="k">SHEET</span><span class="v">01 / 01</span></div>
+        <div class="tb-cell"><span class="k">SCALE</span><span class="v">1:1</span></div>
+        <div class="tb-cell"><span class="k">STATES</span><span class="v">03</span></div>
+      </div>
+    </div>
+
+    <div class="zones">
+      <section class="zone">
+        <div class="zone-left">
+          <div class="zl">ZONE A</div>
+          <div class="zt">To Do</div>
+          <div class="zc">02 TASKS · PENDING</div>
+          <div class="zdim">│ 344 px │</div>
+        </div>
+        <div class="cards">
+          <div class="card"><div class="code">T-01 / PENDING</div><div class="txt">Analyze competitors</div></div>
+          <div class="card"><div class="code">T-02 / PENDING</div><div class="txt">Design high-fidelity wireframes</div></div>
+          <button class="add">+ ADD TASK</button>
+        </div>
+      </section>
+
+      <section class="zone">
+        <div class="zone-left">
+          <div class="zl">ZONE B</div>
+          <div class="zt">In Progress</div>
+          <div class="zc">02 TASKS · ACTIVE</div>
+          <div class="zdim">│ 344 px │</div>
+        </div>
+        <div class="cards">
+          <div class="card"><div class="code">T-03 / ACTIVE</div><div class="txt">Set up the database (Supabase)</div></div>
+          <div class="card"><div class="code">T-04 / ACTIVE</div><div class="txt">Implement authentication</div></div>
+          <button class="add">+ ADD TASK</button>
+        </div>
+      </section>
+
+      <section class="zone">
+        <div class="zone-left">
+          <div class="zl">ZONE C</div>
+          <div class="zt">Done</div>
+          <div class="zc">01 TASK · COMPLETED</div>
+          <div class="zdim">│ 344 px │</div>
+        </div>
+        <div class="cards">
+          <div class="card"><div class="code">T-05 / COMPLETED</div><div class="txt">Create the GitHub repository</div></div>
+          <button class="add">+ ADD TASK</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="legend">
+      <div class="items">
+        <span>— — ZONE LIMIT</span>
+        <span>▭ TASK CARD</span>
+        <span>│ DIMENSION</span>
+      </div>
+      <span>ALL DIMENSIONS IN PX · 05 TASKS</span>
+    </div>
+  </div>
+</body>
+</html>

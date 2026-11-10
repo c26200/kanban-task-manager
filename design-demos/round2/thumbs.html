@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kanban Flow — round 2 candidates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Jost:wght@400;500;700&family=Special+Elite&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Fraunces:opsz,wght@9..144,600&family=Archivo+Narrow:wght@400;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #d9d9d4; padding: 24px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 480px); gap: 18px; width: max-content; }
+  .cell { width: 480px; }
+  figcaption { font: 500 10px/1 "Inter", sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #333; padding: 7px 0 0; }
+  .thumb { width: 480px; height: 300px; position: relative; overflow: hidden; outline: 1px solid rgba(0,0,0,.15); }
+
+  /* 1 Blueprint */
+  .t1 {
+    background-color: #F8F8F2;
+    background-image: linear-gradient(#D8E2F0 1px, transparent 1px), linear-gradient(90deg, #D8E2F0 1px, transparent 1px);
+    background-size: 16px 16px;
+    color: #1F4E9C; padding: 10px 12px; font-family: "IBM Plex Mono", monospace;
+  }
+  .t1 .h { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #1F4E9C; padding-bottom: 4px; }
+  .t1 .h b { font-size: 11px; letter-spacing: .12em; }
+  .t1 .h span { font-size: 6px; }
+  .t1 .zones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+  .t1 .zone { border: 1px dashed #1F4E9C; padding: 6px; min-height: 190px; position: relative; }
+  .t1 .zl { font-size: 5.5px; letter-spacing: .1em; border-bottom: 1px solid #9DB4D6; padding-bottom: 3px; }
+  .t1 .card { background: #FFF; border: 1px solid #1F4E9C; padding: 4px; margin-top: 5px; font-size: 5.5px; line-height: 1.4; }
+  .t1 .dim { position: absolute; left: 6px; right: 6px; bottom: 4px; border-top: 1px solid #9DB4D6; font-size: 5px; text-align: center; padding-top: 2px; }
+
+  /* 2 Primary */
+  .t2 { background: #F4F1E8; color: #111; padding: 10px 12px; font-family: "Jost", sans-serif; }
+  .t2 .h { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 3px solid #111; padding-bottom: 3px; }
+  .t2 .h b { font-size: 15px; letter-spacing: .02em; }
+  .t2 .h span { font-size: 6px; letter-spacing: .1em; }
+  .t2 .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
+  .t2 .col { position: relative; padding-top: 34px; }
+  .t2 .shape { position: absolute; top: 0; left: 50%; transform: translateX(-50%); }
+  .t2 .circle { width: 30px; height: 30px; border-radius: 50%; background: #E63946; }
+  .t2 .square { width: 28px; height: 28px; background: #1D4ED8; }
+  .t2 .tri { width: 0; height: 0; border-left: 16px solid transparent; border-right: 16px solid transparent; border-bottom: 28px solid #F4C20D; }
+  .t2 .cl { font-size: 6px; font-weight: 700; letter-spacing: .1em; }
+  .t2 .card { background: #FFF; border: 2px solid #111; padding: 4px; margin-top: 4px; font-size: 5.5px; line-height: 1.35; }
+
+  /* 3 Card Catalog */
+  .t3 { background: #E9E3D3; color: #1C1B18; padding: 8px 12px; font-family: "Special Elite", cursive; }
+  .t3 .h { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #1C1B18; padding-bottom: 3px; }
+  .t3 .h b { font-size: 13px; letter-spacing: .02em; }
+  .t3 .h span { font-family: "IBM Plex Mono", monospace; font-size: 5.5px; }
+  .t3 .tabs { display: flex; gap: 4px; margin-top: 6px; }
+  .t3 .tab { background: #D8CFB8; border: 1px solid #1C1B18; border-bottom: none; padding: 3px 8px; font-family: "IBM Plex Mono", monospace; font-size: 5.5px; }
+  .t3 .tab.on { background: #FBF7EA; }
+  .t3 .drawer { background: #FBF7EA; border: 1px solid #1C1B18; padding: 6px; }
+  .t3 .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .t3 .card { background: #FBF7EA; border: 1px solid #B9AE93; padding: 4px 5px; margin-top: 4px; position: relative; box-shadow: 1px 1px 0 #C9BFA6; }
+  .t3 .rule { border-bottom: 1px solid #D8CFB8; height: 5px; }
+  .t3 .card .txt { font-size: 5.5px; line-height: 1.3; margin-top: 2px; }
+  .t3 .stamp { position: absolute; right: 3px; top: 3px; color: #B03A2E; border: 1px solid #B03A2E; font-family: "IBM Plex Mono", monospace; font-size: 4px; padding: 1px 2px; transform: rotate(-8deg); }
+
+  /* 4 Linear */
+  .t4 { background: #0B0D12; color: #E8EAF0; padding: 8px 10px; font-family: "Inter", sans-serif; display: grid; grid-template-columns: 66px 1fr; gap: 7px; }
+  .t4 .rail { border-right: 1px solid #1E232E; padding-right: 5px; font-family: "JetBrains Mono", monospace; font-size: 5px; line-height: 2.1; color: #7C8595; }
+  .t4 .rail b { color: #7C5CFF; }
+  .t4 .h { display: flex; justify-content: space-between; font-size: 6.5px; }
+  .t4 .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 5px; }
+  .t4 .col { border: 1px solid #1E232E; padding: 4px; }
+  .t4 .cl { display: flex; justify-content: space-between; font-family: "JetBrains Mono", monospace; font-size: 5px; color: #7C8595; border-bottom: 1px solid #1E232E; padding-bottom: 2px; }
+  .t4 .card { background: #10141C; border: 1px solid #242A36; border-radius: 3px; padding: 3px; margin-top: 3px; font-size: 5px; line-height: 1.3; }
+
+  /* 5 Trello */
+  .t5 { background: #0079BF; color: #172B4D; padding: 9px 11px; font-family: "Inter", sans-serif; }
+  .t5 .h { display: flex; justify-content: space-between; color: #FFF; font-size: 6.5px; }
+  .t5 .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 6px; }
+  .t5 .col { background: #EBECF0; border-radius: 4px; padding: 4px; }
+  .t5 .cl { font-size: 5.5px; font-weight: 700; }
+  .t5 .card { background: #FFF; border-radius: 3px; padding: 3px; margin-top: 3px; font-size: 5px; line-height: 1.3; box-shadow: 0 1px 0 rgba(9,30,66,.15); }
+
+  /* 6 POPEYE */
+  .t6 { background: #F6F3EA; color: #111; padding: 8px 11px; font-family: "Archivo Narrow", sans-serif; }
+  .t6 .h { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 3px solid #111; padding-bottom: 2px; }
+  .t6 .h b { font-size: 13px; }
+  .t6 .h span { font-size: 5px; letter-spacing: .1em; }
+  .t6 h1 { font-size: 21px; line-height: .95; margin-top: 4px; }
+  .t6 h1 mark { background: #F2C94C; padding: 0 3px; }
+  .t6 .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 5px; }
+  .t6 .cc { border: 2px solid #111; padding: 4px; }
+  .t6 .cc .n { font-family: "JetBrains Mono", monospace; font-size: 5px; }
+  .t6 .cc .t { font-size: 7px; font-weight: 700; }
+  .t6 .card { font-size: 5.5px; line-height: 1.35; border-top: 1px solid #111; padding-top: 2px; margin-top: 2px; }
+  .t6 .note { font-family: "Caveat", cursive; font-size: 8px; color: #C1121F; }
+</style>
+</head>
+<body>
+<div class="grid">
+
+  <figure class="cell"><div class="thumb t1">
+    <div class="h"><b>KANBAN FLOW — PLAN No. 04</b><span>SCALE 1:1 · 1440×900</span></div>
+    <div class="zones">
+      <div class="zone"><div class="zl">ZONE A — TO DO (02)</div><div class="card">Analyze competitors</div><div class="card">Design high-fidelity wireframes</div><div class="dim">│ 320 │</div></div>
+      <div class="zone"><div class="zl">ZONE B — IN PROGRESS (02)</div><div class="card">Set up the database (Supabase)</div><div class="card">Implement authentication</div><div class="dim">│ 320 │</div></div>
+      <div class="zone"><div class="zl">ZONE C — DONE (01)</div><div class="card">Create the GitHub repository</div><div class="dim">│ 320 │</div></div>
+    </div>
+  </div><figcaption>01 · Otl Aicher — Blueprint</figcaption></figure>
+
+  <figure class="cell"><div class="thumb t2">
+    <div class="h"><b>KANBAN FLOW</b><span>THREE STATES · FIVE TASKS</span></div>
+    <div class="cols">
+      <div class="col"><div class="shape circle"></div><div class="cl">TO DO / 02</div><div class="card">Analyze competitors</div><div class="card">Design high-fidelity wireframes</div></div>
+      <div class="col"><div class="shape square"></div><div class="cl">IN PROGRESS / 02</div><div class="card">Set up the database (Supabase)</div><div class="card">Implement authentication</div></div>
+      <div class="col"><div class="shape tri"></div><div class="cl">DONE / 01</div><div class="card">Create the GitHub repository</div></div>
+    </div>
+  </div><figcaption>02 · Herbert Bayer — Primary</figcaption></figure>
+
+  <figure class="cell"><div class="thumb t3">
+    <div class="h"><b>Kanban Flow</b><span>CARD CATALOG · 05</span></div>
+    <div class="tabs"><div class="tab on">TO DO</div><div class="tab">IN PROGRESS</div><div class="tab">DONE</div></div>
+    <div class="drawer">
+      <div class="cols">
+        <div><div class="card"><div class="rule"></div><div class="rule"></div><div class="txt">Analyze competitors</div><span class="stamp">PENDING</span></div><div class="card"><div class="rule"></div><div class="rule"></div><div class="txt">Design wireframes</div><span class="stamp">PENDING</span></div></div>
+        <div><div class="card"><div class="rule"></div><div class="rule"></div><div class="txt">Set up Supabase</div><span class="stamp">ACTIVE</span></div><div class="card"><div class="rule"></div><div class="rule"></div><div class="txt">Implement auth</div><span class="stamp">ACTIVE</span></div></div>
+        <div><div class="card"><div class="rule"></div><div class="rule"></div><div class="txt">Create the repository</div><span class="stamp">DONE</span></div></div>
+      </div>
+    </div>
+  </div><figcaption>03 · Irma Boom — Card Catalog</figcaption></figure>
+
+  <figure class="cell"><div class="thumb t4">
+    <div class="rail">01 TO DO<br><b>02 PROGRESS</b><br>03 DONE<br><br>RESET</div>
+    <div><div class="h"><span>Kanban Flow</span><span>05 tasks</span></div>
+      <div class="cols">
+        <div class="col"><div class="cl"><span>TO DO</span><span>02</span></div><div class="card">Analyze competitors</div><div class="card">Design wireframes</div></div>
+        <div class="col"><div class="cl"><span>PROGRESS</span><span>02</span></div><div class="card">Set up Supabase</div><div class="card">Implement auth</div></div>
+        <div class="col"><div class="cl"><span>DONE</span><span>01</span></div><div class="card">Create the repository</div></div>
+      </div>
+    </div>
+  </div><figcaption>04 · Linear — Dense Tool</figcaption></figure>
+
+  <figure class="cell"><div class="thumb t5">
+    <div class="h"><span>Kanban Flow</span><span>Board</span></div>
+    <div class="cols">
+      <div class="col"><div class="cl">To Do</div><div class="card">Analyze competitors</div><div class="card">Design wireframes</div></div>
+      <div class="col"><div class="cl">In Progress</div><div class="card">Set up Supabase</div><div class="card">Implement auth</div></div>
+      <div class="col"><div class="cl">Done</div><div class="card">Create the repository</div></div>
+    </div>
+  </div><figcaption>05 · Trello — Blue Board</figcaption></figure>
+
+  <figure class="cell"><div class="thumb t6">
+    <div class="h"><b>KANBAN FLOW No. 05</b><span>THREE STATES · FIVE TASKS</span></div>
+    <h1>Move the work <mark>across the board.</mark></h1>
+    <div class="cols">
+      <div class="cc"><div class="n">01</div><div class="t">To Do</div><div class="card">Analyze competitors</div><div class="card">Design wireframes</div></div>
+      <div class="cc"><div class="n">02</div><div class="t">In Progress</div><div class="card">Set up Supabase</div><div class="card">Implement auth</div></div>
+      <div class="cc"><div class="n">03</div><div class="t">Done</div><div class="card">Create the repository</div><div class="note">done ✓</div></div>
+    </div>
+  </div><figcaption>06 · POPEYE — Dense Issue</figcaption></figure>
+
+</div>
+</body>
+</html>

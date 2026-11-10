@@ -1,10 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --blueprint: #0B3D6E;
+  --line: #9BD1FF;
+  --paper: #F8F8F2;
+  --ink: #14356B;
+  --soft: #B8D6F5;
+  --muted: #7FAEDC;
+  --font-body: 'Archivo', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
 body {
-  background-color: #09090b; /* Color 'main' */
-  color: #e4e4e7; /* Texto claro (Zinc 200) */
-  font-family: 'Inter', sans-serif;
-  overflow: hidden; /* Evitamos scroll general, solo en las columnas */
+  margin: 0;
+  background-color: var(--blueprint);
+  background-image:
+    linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: #E8F1FF;
+  font-family: var(--font-body);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.mono { font-family: var(--font-mono); }
+
+.app { height: 100%; display: flex; flex-direction: column; padding: 20px 26px 16px; }
+
+/* ── Title block ─────────────────────────────────────────── */
+.titleblock {
+  flex: none; display: flex; justify-content: space-between; align-items: stretch;
+  border: 2px solid var(--line); background: rgba(8, 45, 82, .9);
+}
+.tb-left { padding: 10px 16px; }
+.tb-left .k { font-family: var(--font-mono); font-size: 14px; letter-spacing: .14em; color: var(--line); }
+.tb-left h1 { font-size: 26px; font-weight: 700; letter-spacing: -.01em; margin: 3px 0 0; }
+.tb-right { display: flex; align-items: stretch; border-left: 2px solid var(--line); }
+.tb-cell {
+  padding: 7px 14px; border-left: 1px solid rgba(155,209,255,.5);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.tb-cell:first-child { border-left: none; }
+.tb-cell .k { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; color: var(--line); }
+.tb-cell .v { font-family: var(--font-mono); font-size: 13px; margin-top: 2px; }
+.reset {
+  border: none; border-left: 2px solid var(--line); background: none; color: #E8F1FF;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; padding: 0 16px;
+}
+.reset:hover { background: rgba(155,209,255,.12); }
+
+/* ── Board ───────────────────────────────────────────────── */
+.board {
+  flex: 1; display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px; margin-top: 14px; min-height: 0;
+}
+.zone {
+  border: 1px dashed var(--line); background: rgba(8, 45, 82, .55);
+  display: flex; flex-direction: column; min-height: 0;
+}
+.zone-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 10px 12px; border-bottom: 1px solid rgba(155,209,255,.5);
+}
+.zone-head .t { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; }
+.zone-head .c { font-family: var(--font-mono); font-size: 12px; color: var(--soft); }
+
+.zone-cards {
+  flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 10px;
+  overflow-y: auto; min-height: 80px;
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+.card {
+  background: var(--paper); border: 1px solid var(--line); color: var(--ink);
+  padding: 10px 12px; cursor: grab;
+}
+.card:active { cursor: grabbing; }
+.card-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.card .code { font-family: var(--font-mono); font-size: 12px; color: #4E6885; letter-spacing: .06em; }
+.card .txt { font-size: 15px; line-height: 1.35; margin-top: 4px; word-break: break-word; }
+
+.del {
+  background: none; border: none; color: #8A4A3A; font-size: 20px; line-height: 1;
+  padding: 0 2px; cursor: pointer;
+}
+.del:hover { color: #B03A2E; }
+
+.card-input {
+  width: 100%; background: var(--paper); color: var(--ink);
+  border: 1px solid var(--line); padding: 8px; font-family: var(--font-body);
+  font-size: 15px; line-height: 1.35; resize: none; outline: none;
+}
+
+.add {
+  margin: 0 12px 12px; border: 1px dashed var(--line); background: none; color: #E8F1FF;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; padding: 9px;
+  cursor: pointer;
+}
+.add:hover { background: rgba(155,209,255,.12); }
+
+.drag-placeholder {
+  border: 1px dashed var(--line); background: rgba(155,209,255,.08); min-height: 64px;
+}
+
+/* ── Legend ──────────────────────────────────────────────── */
+.legend {
+  flex: none; display: flex; justify-content: space-between; margin-top: 12px;
+  border-top: 1px solid rgba(155,209,255,.4); padding-top: 7px;
+  font-family: var(--font-mono); font-size: 14px; letter-spacing: .06em; color: var(--soft);
+}
+.legend .items { display: flex; gap: 22px; }
+
+@media (max-width: 1100px) {
+  .app { padding: 14px; }
+  .board { grid-template-columns: 1fr; overflow-y: auto; }
+  .zone { min-height: 280px; }
+  .tb-cell { display: none; }
 }

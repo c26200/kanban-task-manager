@@ -1,7 +1,8 @@
 # Kanban Flow
 
-A three-column kanban board with drag and drop, built with React and dnd-kit. The board
-persists in `localStorage`, so a reload keeps your tasks without needing a backend.
+A three-column kanban board with drag and drop, built with React and dnd-kit. The interface
+is drawn as an engineering blueprint: graph-paper field, dashed zones and annotated cards.
+The board persists in `localStorage`, so a reload keeps your tasks without a backend.
 
 **[Live demo](https://kanban-task-manager-eight.vercel.app)**
 
@@ -9,8 +10,8 @@ persists in `localStorage`, so a reload keeps your tasks without needing a backe
 
 ## What it does
 
-- Drag tasks between Backlog, In Progress and Done — including into empty columns
-- Create, rename and delete tasks directly on the board
+- Drag tasks between To Do, In Progress and Done — including into empty columns
+- Create, rename (inline) and delete tasks directly on the board
 - State is written to `localStorage` under the `kanban-tasks` key on every change
 - "Reset board" restores the seed data from `src/data/board.js`
 

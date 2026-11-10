@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kanban Flow — Nightrail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: #0A192F; color: #8892B0;
+    font-family: "Inter", sans-serif;
+    height: 100vh; overflow: hidden;
+    display: grid; grid-template-columns: 236px 1fr;
+  }
+  .mono { font-family: "JetBrains Mono", monospace; }
+
+  aside { border-right: 1px solid #233554; padding: 26px 20px; display: flex; flex-direction: column; }
+  .logo { font-family: "JetBrains Mono", monospace; font-size: 15px; letter-spacing: .08em; color: #64FFDA; }
+  .logo span { color: #CCD6F6; }
+  .sub { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: .12em; color: #8CA0C6; margin-top: 4px; }
+  .nav { margin-top: 38px; display: flex; flex-direction: column; }
+  .nav a { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; border-bottom: 1px solid #172A45; text-decoration: none; color: #8892B0; font-size: 14px; }
+  .nav a .idx { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #64FFDA; margin-right: 10px; }
+  .nav a .n { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #8CA0C6; }
+  .nav a.on { color: #CCD6F6; }
+  .nav a.on .idx { color: #64FFDA; }
+  .rail-foot { margin-top: auto; border-top: 1px solid #233554; padding-top: 14px; }
+  .rail-foot .k { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: .12em; color: #8CA0C6; }
+  .rail-foot .v { font-family: "JetBrains Mono", monospace; font-size: 26px; color: #CCD6F6; margin-top: 2px; }
+  .reset { margin-top: 14px; background: none; border: 1px solid #233554; color: #8892B0; padding: 9px; font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: .08em; }
+  .reset:hover { border-color: #64FFDA; color: #64FFDA; }
+
+  main { padding: 24px 28px 22px; display: flex; flex-direction: column; min-height: 0; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid #233554; padding-bottom: 14px; flex: none; }
+  h1 { font-size: 26px; font-weight: 600; letter-spacing: -.02em; color: #CCD6F6; margin: 0; }
+  .kicker { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: .14em; color: #64FFDA; }
+  .head-meta { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #8CA0C6; text-align: right; line-height: 1.7; }
+
+  .board { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; min-height: 0; padding-top: 18px; }
+  .col { border: 1px solid #233554; display: flex; flex-direction: column; min-height: 0; }
+  .col-head { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 14px; border-bottom: 1px solid #233554; }
+  .col-head .t { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: .1em; color: #64FFDA; }
+  .col-head .c { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #8CA0C6; }
+  .cards { padding: 12px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .card { background: #112240; border: 1px solid #233554; padding: 12px 13px; }
+  .card:hover { border-color: #64FFDA; }
+  .card .txt { font-size: 14px; line-height: 1.4; color: #CCD6F6; }
+  .card .meta { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #8CA0C6; margin-top: 6px; letter-spacing: .06em; }
+  .add { margin: 0 12px 12px; border: 1px dashed #2E4A6B; color: #8CA0C6; padding: 9px; font-family: "JetBrains Mono", monospace; font-size: 12px; background: none; }
+  .add:hover { border-color: #64FFDA; color: #64FFDA; }
+</style>
+</head>
+<body>
+  <aside>
+    <div class="logo">KANBAN<span>_FLOW</span></div>
+    <div class="sub">LOCAL BOARD / NO BACKEND</div>
+
+    <nav class="nav">
+      <a href="#" class="on"><span><span class="idx">01</span>To Do</span><span class="n">02</span></a>
+      <a href="#"><span><span class="idx">02</span>In Progress</span><span class="n">02</span></a>
+      <a href="#"><span><span class="idx">03</span>Done</span><span class="n">01</span></a>
+    </nav>
+
+    <div class="rail-foot">
+      <div class="k">TOTAL TASKS</div>
+      <div class="v">05</div>
+      <button class="reset">RESET BOARD</button>
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <div>
+        <div class="kicker">BOARD / Q4 2026</div>
+        <h1>Kanban Flow</h1>
+      </div>
+      <div class="head-meta">STORED IN LOCALSTORAGE<br>05 TASKS · 3 STATES</div>
+    </header>
+
+    <section class="board">
+      <div class="col">
+        <div class="col-head"><span class="t">01 / TO DO</span><span class="c">02</span></div>
+        <div class="cards">
+          <div class="card"><div class="txt">Analyze competitors</div><div class="meta">PENDING</div></div>
+          <div class="card"><div class="txt">Design high-fidelity wireframes</div><div class="meta">PENDING</div></div>
+        </div>
+        <button class="add">+ ADD TASK</button>
+      </div>
+
+      <div class="col">
+        <div class="col-head"><span class="t">02 / IN PROGRESS</span><span class="c">02</span></div>
+        <div class="cards">
+          <div class="card"><div class="txt">Set up the database (Supabase)</div><div class="meta">ACTIVE</div></div>
+          <div class="card"><div class="txt">Implement authentication</div><div class="meta">ACTIVE</div></div>
+        </div>
+        <button class="add">+ ADD TASK</button>
+      </div>
+
+      <div class="col">
+        <div class="col-head"><span class="t">03 / DONE</span><span class="c">01</span></div>
+        <div class="cards">
+          <div class="card"><div class="txt">Create the GitHub repository</div><div class="meta">COMPLETED</div></div>
+        </div>
+        <button class="add">+ ADD TASK</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
